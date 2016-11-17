@@ -97,10 +97,10 @@ func main() {
 		cmd.Command("set", "Add or update a context", func(cmd *cli.Cmd) {
 			optContext = cmd.StringArg("CONTEXT", "", "Context to work on")
 			optLogin = cmd.StringArg("LOGIN", "", "Login to set")
-			optPass = cmd.StringArg("PASS", "", "Password to set")
+			optPass = cmd.StringArg("PASS", "", "Password to set (would be asked if not set in command line)")
 			optDesc = cmd.StringArg("DESC", "", "Description to set")
 			addDefaultArgs(cmd)
-			cmd.Spec = "CONTEXT LOGIN PASS [DESC] [OPTIONS]"
+			cmd.Spec = "CONTEXT LOGIN [PASS] [DESC] [OPTIONS]"
 
 			cmd.Action = func() {
 				checkLog()

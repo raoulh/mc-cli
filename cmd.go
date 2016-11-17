@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+
+	"github.com/howeyc/gopass"
 )
 
 const (
@@ -24,6 +26,15 @@ func processLoginCmd(subCmd, context, login, pwd, desc string, printDesc bool) (
 	if subCmd == "get" {
 		m.Msg = "get_credential"
 	} else if subCmd == "set" {
+		if pwd == "" {
+			fmt.Printf("Password: ")
+			p, err := gopass.GetPasswdMasked()
+			if err != nil {
+				return err
+			}
+			pwd = string(p)
+		}
+
 		m.Msg = "set_credential"
 		m.Data.Password = pwd
 		m.Data.Description = desc
