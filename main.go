@@ -44,6 +44,8 @@ var (
 	optDesc      *string
 	optPrintDesc *bool
 	optFilename  *string
+	optParameter *string
+	optValue     *string
 
 	isTerminal  bool
 	progressBar *progress.ProgressBar
@@ -143,7 +145,35 @@ func main() {
 	})
 
 	app.Command("parameters", "Get/Set device parameters", func(cmd *cli.Cmd) {
-		checkLog()
+		cmd.Command("get", "Retrieve device parameter", func(cmd *cli.Cmd) {
+			optParameter = cmd.StringArg("PARAMETER", "", "Selected device parameter")
+			addDefaultArgs(cmd)
+			cmd.Spec = "PARAMETER [OPTIONS]"
+
+			cmd.Action = func() {
+				checkLog()
+
+				err := processParameterCmd("get", *optParameter, "")
+				if err != nil {
+					exit(err, 1)
+				}
+			}
+		})
+		cmd.Command("set", "Set device parameter", func(cmd *cli.Cmd) {
+			optParameter = cmd.StringArg("PARAMETER", "", "Selected device parameter")
+			optValue = cmd.StringArg("VALUE", "", "Value to set the parameter to")
+			addDefaultArgs(cmd)
+			cmd.Spec = "PARAMETER VALUE [OPTIONS]"
+
+			cmd.Action = func() {
+				checkLog()
+
+				err := processParameterCmd("set", *optParameter, *optValue)
+				if err != nil {
+					exit(err, 1)
+				}
+			}
+		})
 	})
 
 	if err := app.Run(os.Args); err != nil {
