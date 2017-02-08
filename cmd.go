@@ -110,3 +110,9 @@ func processDataCmd(subCmd, context, filename string, progressFunc ProgressCb) (
 
 	return
 }
+
+func processParameterCmd(subCmd, parameter string, value string) (err error) {
+	fmt.Println(errorRed(CharAbort), "Not implemented yet")
+
+	return (nil)
+}
