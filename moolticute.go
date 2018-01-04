@@ -68,7 +68,12 @@ func McSendQueryProgress(m *MoolticuteMsg, progress ProgressCb) (*MsgData, error
 	defer c.Close()
 
 	if m.ClientId != "" {
-		m.ClientId = uuid.NewV4().String()
+		client_uuid, err := uuid.NewV4()
+		if err != nil {
+			log.Print("UUID for client ID generation failed:", err)
+			return nil, err
+		}
+		m.ClientId = client_uuid.String()
 	}
 
 	data, err := json.Marshal(m)
@@ -151,9 +156,15 @@ func McLoadKeys() (keys *McBinKeys, err error) {
 	defer c.WriteMessage(websocket.CloseMessage, websocket.FormatCloseMessage(websocket.CloseNormalClosure, ""))
 	defer c.Close()
 
+	client_uuid, err := uuid.NewV4()
+	if err != nil {
+		log.Print("UUID for client ID generation failed:", err)
+		return nil, err
+	}
+
 	m := MoolticuteMsg{
 		Msg:      "get_data_node",
-		ClientId: uuid.NewV4().String(),
+		ClientId: client_uuid.String(),
 		Data: MsgData{
 			Service: "Moolticute SSH Keys",
 		},
@@ -254,9 +265,15 @@ func McSetKeys(keys *McBinKeys) (err error) {
 		return fmt.Errorf("Failed to encode with encoding/gob: %v", err)
 	}
 
+	client_uuid, err := uuid.NewV4()
+	if err != nil {
+		log.Print("UUID for client ID generation failed:", err)
+		return err
+	}
+
 	m := MoolticuteMsg{
 		Msg:      "set_data_node",
-		ClientId: uuid.NewV4().String(),
+		ClientId: client_uuid.String(),
 		Data: MsgData{
 			Service:  "Moolticute SSH Keys",
 			NodeData: base64.StdEncoding.EncodeToString(buffer.Bytes()),
