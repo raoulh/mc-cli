@@ -26,7 +26,7 @@ function upload_file()
     rm -f upload.log
 }
 
-BIN="moolticute-cli"
+BIN="mc-cli"
 
 echo ">> Building windows bin"
 export GO15VENDOREXPERIMENT=1
@@ -54,4 +54,3 @@ go env
 rm -f $BIN
 go build -i
 upload_file ${BIN} "tools/macos"
-

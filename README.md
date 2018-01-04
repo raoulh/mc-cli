@@ -10,15 +10,15 @@ This tool is a command line tool to interact with a running moolticute daemon. I
 Install go if needed. Add `$GOPATH/bin` to your path.
 
 ```
-go get github.com/raoulh/moolticute-cli
+go get github.com/raoulh/mc-cli
 ```
 
 ### Usage ###
 
 ```
-moolticute-cli --help
+mc-cli --help
 
-Usage: moolticute-cli COMMAND [arg...]
+Usage: mc-cli COMMAND [arg...]
 
 Command line tool to interact with a mooltipass device through a moolticute daemon
 
@@ -27,13 +27,13 @@ Commands:
   data         Import & export small files stored in the device
   parameters   Get/Set device parameters
 
-Run 'moolticute-cli COMMAND --help' for more information on a command.
+Run 'mc-cli COMMAND --help' for more information on a command.
 ```
 
 ```
-moolticute-cli login --help
+mc-cli login --help
 
-Usage: moolticute-cli login COMMAND [arg...]
+Usage: mc-cli login COMMAND [arg...]
 
 Manage credentials stored in the device
 
@@ -41,13 +41,13 @@ Commands:
   get          Get a password for given context
   set          Add or update a context
 
-Run 'moolticute-cli login COMMAND --help' for more information on a command.
+Run 'mc-cli login COMMAND --help' for more information on a command.
 ```
 
 ```
-moolticute-cli data --help                                                                                                               16:45:08  ✘ 2
+mc-cli data --help                                                                                                               16:45:08  ✘ 2
 
-Usage: moolticute-cli data COMMAND [arg...]
+Usage: mc-cli data COMMAND [arg...]
 
 Import & export small files stored in the device
 
@@ -55,6 +55,6 @@ Commands:
   get          Retrieve data for given context
   set          Add or update data for given context
 
-Run 'moolticute-cli data COMMAND --help' for more information on a command.
+Run 'mc-cli data COMMAND --help' for more information on a command.
 ```
 > Warning! This project is a work in progress!
