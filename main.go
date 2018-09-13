@@ -78,7 +78,7 @@ func main() {
 		isTerminal = true
 	}
 
-	app := cli.App("moolticute-cli", "Command line tool to interact with a mooltipass device through a moolticute daemon")
+	app := cli.App("mc-cli", "Command line tool to interact with a mooltipass device through a moolticute daemon")
 
 	app.Command("login", "Manage credentials stored in the device", func(cmd *cli.Cmd) {
 		cmd.Command("get", "Get a password for given context", func(cmd *cli.Cmd) {

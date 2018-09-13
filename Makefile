@@ -1,5 +1,5 @@
 
-APPNAME = moolticute-cli
+APPNAME = mc-cli
 
 TAGS = ""
 BUILD_FLAGS = "-v"
@@ -12,5 +12,3 @@ build: $(GENERATED)
 
 clean:
 	go clean -i ./...
-
-

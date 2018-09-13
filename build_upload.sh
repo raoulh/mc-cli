@@ -60,4 +60,3 @@ rm -f $BIN
 go get -d
 go build -v
 upload_file ${BIN} "tools/macos"
-
