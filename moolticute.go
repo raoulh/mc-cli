@@ -100,7 +100,7 @@ func McSendQueryProgress(m *MoolticuteMsg, progress ProgressCb) (*MsgData, error
 			return nil, fmt.Errorf("Moolticute: unmarshal error: %v", err)
 		}
 
-		if recv.Msg == "progress" {
+		if recv.Msg == "progress" && recv.Data != nil {
 			var recvData MsgData
 			err = json.Unmarshal([]byte(*recv.Data), &recvData)
 			if err != nil {
