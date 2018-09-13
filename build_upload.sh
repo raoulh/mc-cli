@@ -1,4 +1,6 @@
-#!/bin/bash
+#!/bin/bash -x
+
+set -e
 
 echo "Build and upload binaries to calaos.fr"
 
@@ -21,12 +23,13 @@ function upload_file()
         -F "upload_folder=$INSTALLPATH" \
         -F "upload_sha256=$HASH" \
         -F "upload_file=@$FNAME" \
+        -F "upload_replace=true" \
         --progress-bar \
         https://calaos.fr/mooltipass/upload -o upload.log
     rm -f upload.log
 }
 
-BIN="moolticute-cli"
+BIN="mc-cli"
 
 echo ">> Building windows bin"
 export GO15VENDOREXPERIMENT=1
@@ -36,7 +39,8 @@ export GOARCH=386
 export GOOS=windows
 go env
 rm -f ${BIN}.exe
-go build -i
+go get -d
+go build -v
 upload_file ${BIN}.exe "tools/windows"
 
 echo ">> Building linux bin"
@@ -44,7 +48,8 @@ export GOARCH=amd64
 export GOOS=linux
 go env
 rm -f $BIN ${BIN}.exe
-go build -i
+go get -d
+go build -v
 upload_file ${BIN} "tools/linux"
 
 echo ">> Building macos bin"
@@ -52,6 +57,7 @@ export GOARCH=amd64
 export GOOS=darwin
 go env
 rm -f $BIN
-go build -i
+go get -d
+go build -v
 upload_file ${BIN} "tools/macos"
 
