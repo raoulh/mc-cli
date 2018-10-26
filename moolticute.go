@@ -31,6 +31,7 @@ type MsgData struct {
 	RequestId       string `json:"request_id,omitempty"`
 	ProgressTotal   int    `json:"progress_total,omitempty"`
 	ProgressCurrent int    `json:"progress_current,omitempty"`
+	McCliVersion    string `json:"mc_cli_version,omitempty"`
 }
 
 type MoolticuteMsg struct {

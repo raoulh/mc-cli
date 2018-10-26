@@ -38,6 +38,7 @@ func processLoginCmd(subCmd, context, login, pwd, desc string, printDesc bool) (
 		m.Msg = "set_credential"
 		m.Data.Password = pwd
 		m.Data.Description = desc
+		m.Data.McCliVersion = "1.0"
 	}
 
 	res, err := McSendQuery(m)
