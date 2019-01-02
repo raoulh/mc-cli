@@ -14,7 +14,7 @@ const (
 	maxFileSize = 524288
 )
 
-func processLoginCmd(subCmd, context, login, pwd, desc string, printDesc bool) (err error) {
+func processLoginCmd(subCmd, context, login, pwd, desc string, printDesc bool, printLogin bool) (err error) {
 
 	m := &MoolticuteMsg{
 		Data: MsgData{
@@ -25,6 +25,8 @@ func processLoginCmd(subCmd, context, login, pwd, desc string, printDesc bool) (
 
 	if subCmd == "get" {
 		m.Msg = "get_credential"
+        } else if subCmd == "del" {
+		m.Msg = "del_credential"
 	} else if subCmd == "set" {
 		if pwd == "" {
 			fmt.Printf("Password: ")
@@ -47,12 +49,15 @@ func processLoginCmd(subCmd, context, login, pwd, desc string, printDesc bool) (
 	}
 
 	if subCmd == "get" {
+                if printLogin {
+			fmt.Println(res.Login)
+		}
 		if printDesc {
 			fmt.Println(res.Description)
 		} else {
 			fmt.Println(res.Password)
 		}
-	} else if subCmd == "set" {
+	} else if subCmd == "set" || subCmd == "del" {
 		fmt.Println(green(CharCheck), "Done")
 	}
 
@@ -67,7 +72,7 @@ func processDataCmd(subCmd, context, filename string, progressFunc ProgressCb) (
 		},
 	}
 
-	if subCmd == "get" {
+	if subCmd == "get" || subCmd == "del" {
 		m.Msg = "get_data_node"
 	} else if subCmd == "set" {
 		m.Msg = "set_data_node"
@@ -105,7 +110,7 @@ func processDataCmd(subCmd, context, filename string, progressFunc ProgressCb) (
 		b := bytes.NewBuffer(bdec)
 		b.WriteTo(os.Stdout)
 
-	} else if subCmd == "set" {
+	} else if subCmd == "set" || subCmd == "del" {
 		fmt.Println(green(CharCheck), "Done")
 	}
 
