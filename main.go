@@ -114,6 +114,20 @@ func main() {
 				}
 			}
 		})
+		cmd.Command("del", "Delete a context", func(cmd *cli.Cmd) {
+			optContext = cmd.StringArg("CONTEXT", "", "Context to work on")
+			optLogin = cmd.StringArg("LOGIN", "", "Login to use (or provided the \"\" (empty) string to select the first)")
+			addDefaultArgs(cmd)
+			cmd.Spec = "CONTEXT LOGIN"
+
+			cmd.Action = func() {
+				checkLog()
+
+				if err := processLoginCmd("del", *optContext, *optLogin, "", "", false, false); err != nil {
+					exit(err, 1)
+				}
+			}
+		})
 	})
 
 	app.Command("data", "Import & export small files stored in the device", func(cmd *cli.Cmd) {
