@@ -14,7 +14,7 @@ const (
 	maxFileSize = 524288
 )
 
-func processLoginCmd(subCmd, context, login, pwd, desc string, printDesc bool) (err error) {
+func processLoginCmd(subCmd, context, login, pwd, desc string, printDesc bool, printLogin bool) (err error) {
 
 	m := &MoolticuteMsg{
 		Data: MsgData{
@@ -47,6 +47,9 @@ func processLoginCmd(subCmd, context, login, pwd, desc string, printDesc bool) (
 	}
 
 	if subCmd == "get" {
+                if printLogin {
+			fmt.Println(res.Login)
+		}
 		if printDesc {
 			fmt.Println(res.Description)
 		} else {

@@ -43,6 +43,7 @@ var (
 	optPass      *string
 	optDesc      *string
 	optPrintDesc *bool
+	optLoginDesc *bool
 	optFilename  *string
 	optParameter *string
 	optValue     *string
@@ -82,16 +83,17 @@ func main() {
 
 	app.Command("login", "Manage credentials stored in the device", func(cmd *cli.Cmd) {
 		cmd.Command("get", "Get a password for given context", func(cmd *cli.Cmd) {
-			optContext = cmd.StringArg("CONTEXT", "", "Context to work on")
-			optLogin = cmd.StringArg("LOGIN", "", "Login to use")
+			optContext = cmd.StringArg("CONTEXT", "", "Context to work on (e.g. the site-name)")
+			optLogin = cmd.StringArg("LOGIN", "", "Login to use (or provided the \"\" (empty) string to select the first)")
 			addDefaultArgs(cmd)
-			optPrintDesc = cmd.BoolOpt("d description", false, "Output service description instead of password")
+			optPrintDesc = cmd.BoolOpt("d description", false, "Output service description instead of the password")
+			optLoginDesc = cmd.BoolOpt("l Output login", false, "Output login too")
 			cmd.Spec = "CONTEXT LOGIN [OPTIONS]"
 
 			cmd.Action = func() {
 				checkLog()
 
-				if err := processLoginCmd("get", *optContext, *optLogin, "", "", *optPrintDesc); err != nil {
+				if err := processLoginCmd("get", *optContext, *optLogin, "", "", *optPrintDesc, *optLoginDesc); err != nil {
 					exit(err, 1)
 				}
 			}
@@ -107,7 +109,7 @@ func main() {
 			cmd.Action = func() {
 				checkLog()
 
-				if err := processLoginCmd("set", *optContext, *optLogin, *optPass, *optDesc, false); err != nil {
+				if err := processLoginCmd("set", *optContext, *optLogin, *optPass, *optDesc, false, false); err != nil {
 					exit(err, 1)
 				}
 			}
