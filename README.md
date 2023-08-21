@@ -10,7 +10,7 @@ This tool is a command line tool to interact with a running moolticute daemon. I
 Install go if needed. Add `$GOPATH/bin` to your path.
 
 ```
-go get github.com/raoulh/mc-cli
+go install github.com/raoulh/mc-cli@latest
 ```
 
 ### Usage ###
