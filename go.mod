@@ -10,7 +10,6 @@ require (
 	github.com/k-takata/go-iscygpty v0.0.0-20161209104439-ef1d38de59ba
 	github.com/mattn/go-isatty v0.0.19
 	github.com/raoulh/go-progress v0.0.0-20161105090339-89c9d35f7878
-	github.com/satori/go.uuid v1.2.0
 )
 
 require (

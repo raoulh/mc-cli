@@ -86,7 +86,7 @@ func McSendQueryProgress(m *MoolticuteMsg, progress ProgressCb) (*MsgData, error
 	for {
 		_, data, err = c.ReadMessage()
 		if err != nil {
-			return nil, fmt.Errorf("Moolticute: read: %v", err)
+			return nil, fmt.Errorf("moolticute: read: %v", err)
 		}
 
 		log.Println(string(data))
@@ -94,15 +94,15 @@ func McSendQueryProgress(m *MoolticuteMsg, progress ProgressCb) (*MsgData, error
 		var recv MoolticuteMsgRaw
 		err = json.Unmarshal(data, &recv)
 		if err != nil {
-			return nil, fmt.Errorf("Moolticute: unmarshal error: %v", err)
+			return nil, fmt.Errorf("moolticute: unmarshal error: %v", err)
 		}
 
 		if recv.Msg == "progress" && recv.Data != nil {
 			var recvData MsgData
 			err = json.Unmarshal([]byte(*recv.Data), &recvData)
 			if err != nil {
-				log.Println("Moolticute: unmarshal error:", err)
-				return nil, fmt.Errorf("Moolticute: %v", err)
+				log.Println("moolticute: unmarshal error:", err)
+				return nil, fmt.Errorf("moolticute: %v", err)
 			}
 			progress(recvData.ProgressTotal, recvData.ProgressCurrent)
 		}
@@ -114,21 +114,21 @@ func McSendQueryProgress(m *MoolticuteMsg, progress ProgressCb) (*MsgData, error
 		var recvData MsgData
 		err = json.Unmarshal([]byte(*recv.Data), &recvData)
 		if err != nil {
-			log.Println("Moolticute: unmarshal error:", err)
-			return nil, fmt.Errorf("Moolticute: %v", err)
+			log.Println("moolticute: unmarshal error:", err)
+			return nil, fmt.Errorf("moolticute: %v", err)
 		}
 
 		if recvData.Failed {
-			log.Println("Error from moolticute:", recvData.ErrorMessage)
-			return nil, fmt.Errorf("Moolticute: %v", recvData.ErrorMessage)
+			log.Println("error from moolticute:", recvData.ErrorMessage)
+			return nil, fmt.Errorf("moolticute: %v", recvData.ErrorMessage)
 		}
 
 		if m.ClientId == recv.ClientId {
 			return &recvData, nil
 		}
 
-		log.Println("Should not get here, something is wrong with moolticute answer")
-		return nil, fmt.Errorf("Something went wrong in Moolticute answer")
+		log.Println("should not get here, something is wrong with moolticute answer")
+		return nil, fmt.Errorf("something went wrong in Moolticute answer")
 	}
 }
 
@@ -213,7 +213,7 @@ func McLoadKeys() (keys *McBinKeys, err error) {
 		}
 
 		log.Println("Should not get here, something is wrong with moolticute answer")
-		return keys, fmt.Errorf("Something went wrong in Moolticute answer")
+		return keys, fmt.Errorf("something went wrong in Moolticute answer")
 	}
 
 	//try to decode binary data from device
@@ -255,7 +255,7 @@ func McSetKeys(keys *McBinKeys) (err error) {
 	var buffer bytes.Buffer
 	binEnc := gob.NewEncoder(&buffer)
 	if err = binEnc.Encode(keys); err != nil {
-		return fmt.Errorf("Failed to encode with encoding/gob: %v", err)
+		return fmt.Errorf("failed to encode with encoding/gob: %v", err)
 	}
 
 	client_uuid := uuid.New()
@@ -281,7 +281,7 @@ func McSetKeys(keys *McBinKeys) (err error) {
 	for {
 		_, data, err = c.ReadMessage()
 		if err != nil {
-			return fmt.Errorf("Moolticute: read: %v", err)
+			return fmt.Errorf("moolticute: read: %v", err)
 		}
 
 		log.Println(string(data))
@@ -289,7 +289,7 @@ func McSetKeys(keys *McBinKeys) (err error) {
 		var recv MoolticuteMsgRaw
 		err = json.Unmarshal(data, &recv)
 		if err != nil {
-			return fmt.Errorf("Moolticute: unmarshal error: %v", err)
+			return fmt.Errorf("moolticute: unmarshal error: %v", err)
 		}
 
 		if recv.Msg != "set_data_node" {
@@ -299,12 +299,12 @@ func McSetKeys(keys *McBinKeys) (err error) {
 		var recvData MsgData
 		err = json.Unmarshal([]byte(*recv.Data), &recvData)
 		if err != nil {
-			return fmt.Errorf("Moolticute: unmarshal error: %v", err)
+			return fmt.Errorf("moolticute: unmarshal error: %v", err)
 		}
 
 		// keys are not present, this is not an error
 		if recvData.Failed {
-			return fmt.Errorf("Error getting node data from moolticute: %v", err)
+			return fmt.Errorf("error getting node data from moolticute: %v", err)
 		}
 
 		if m.ClientId == recv.ClientId {
@@ -312,7 +312,7 @@ func McSetKeys(keys *McBinKeys) (err error) {
 		}
 
 		log.Println("Should not get here, something is wrong with moolticute answer")
-		return fmt.Errorf("Something went wrong in Moolticute answer")
+		return fmt.Errorf("something went wrong in Moolticute answer")
 	}
 
 	return

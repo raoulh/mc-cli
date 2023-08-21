@@ -4,7 +4,6 @@ import (
 	"bytes"
 	"encoding/base64"
 	"fmt"
-	"io/ioutil"
 	"os"
 
 	"github.com/howeyc/gopass"
@@ -75,15 +74,15 @@ func processDataCmd(subCmd, context, filename string, progressFunc ProgressCb) (
 		//open file and encode to base64
 		finfo, err := os.Stat(filename)
 		if err != nil {
-			return fmt.Errorf("Failed to get file info: %v", err)
+			return fmt.Errorf("failed to get file info: %v", err)
 		}
 		if finfo.Size() > maxFileSize {
-			return fmt.Errorf("File is too big for beeing saved into the mooltipass :(")
+			return fmt.Errorf("file is too big for beeing saved into the mooltipass :(")
 		}
 
-		b, err := ioutil.ReadFile(filename)
+		b, err := os.ReadFile(filename)
 		if err != nil {
-			return fmt.Errorf("Failed to read file: %v", err)
+			return fmt.Errorf("failed to read file: %v", err)
 		}
 
 		m.Data.NodeData = base64.StdEncoding.EncodeToString(b)
@@ -98,7 +97,7 @@ func processDataCmd(subCmd, context, filename string, progressFunc ProgressCb) (
 		//decode the base64
 		bdec, err := base64.StdEncoding.DecodeString(res.NodeData)
 		if err != nil {
-			err = fmt.Errorf("Failed to base64 decode data:", err)
+			err = fmt.Errorf("failed to base64 decode data: %v", err)
 			return err
 		}
 

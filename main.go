@@ -1,16 +1,17 @@
+//go:build go1.7
 // +build go1.7
 
 package main
 
 import (
 	"fmt"
-	"io/ioutil"
+	"io"
 	"log"
 	"os"
 	"runtime"
 
 	"github.com/fatih/color"
-	"github.com/jawher/mow.cli"
+	cli "github.com/jawher/mow.cli"
 	"github.com/k-takata/go-iscygpty"
 	"github.com/mattn/go-isatty"
 	"github.com/raoulh/go-progress"
@@ -60,7 +61,7 @@ func checkLog() {
 	if !*debugOpt {
 		//completely disable debug output
 		log.SetFlags(0)
-		log.SetOutput(ioutil.Discard)
+		log.SetOutput(io.Discard)
 	}
 }
 
