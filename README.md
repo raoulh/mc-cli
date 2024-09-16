@@ -41,7 +41,19 @@ Commands:
   get          Get a password for given context
   set          Add or update a context
 
-Run 'mc-cli login COMMAND --help' for more information on a command.
+Run 'mc-cli login COMMAND --help' for more information on a command. A typical example is
+
+  /mc-cli login get github.com ""
+
+or to fetch the password for your github account. Add the flag '-l' to also extract the username:
+
+  /mc-cli login get github.com "" -l
+
+Alternatively use:
+
+  /mc-cli login get github.com myusername
+
+if you want to be specific about a username.
 ```
 
 ```
